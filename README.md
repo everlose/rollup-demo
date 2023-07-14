@@ -28,3 +28,50 @@
     - jest
     - ts-jest
     - @types/jest
+
+## babel 杂记
+
+#### @babel/preset-env 
+
+@babel/preset-env 会使用 @babel/core, ES6 新语法如箭头函数来自 @babel/core 支持
+
+https://babeljs.io/docs/babel-preset-env
+
+会根据 browserslist 库所表达要兼容的浏览器范围，来编译代码.
+
+截止 2023 年 7 月 14 日, browserslist 表达的兼容范围见 [github browserslist](https://github.com/browserslist/browserslist#queries)
+
+```
+Browserslist will use defaults: > 0.5%, last 2 versions, Firefox ESR, not dead.
+```
+
+[browserslist 提供在线的查询条件练习网站](https://browsersl.ist/#q=%3E+0.5%25%2C+last+2+versions%2C+Firefox+ESR%2C+not+dead%2C+IE+%3E%3D+11)
+
+#### @babel/plugin-transform-runtime
+
+https://babeljs.io/docs/babel-plugin-transform-runtime
+
+ES6 绝大多数新 API 如 Promise, Set, Map 等都是来自于 @babel/plugin-transform-runtime 里的 core-js 支持
+
+另外的如果有 ES8 及以上的新 API, @babel/plugin-transform-runtime 会自动使用各种插件来支持。
+
+如 async/await 语法， 会使用 babel-plugin-polyfill-regenerator 来支持。
+
+截止 23 年 7 月 14 日，其默认配置是不使用 corejs，支持 async/await 的，见下文官网摘出来的默认配置
+
+```
+{
+  "plugins": [
+    [
+      "@babel/plugin-transform-runtime",
+      {
+        "absoluteRuntime": false,
+        "corejs": false,
+        "helpers": true,
+        "regenerator": true,
+        "version": "7.0.0-beta.0"
+      }
+    ]
+  ]
+}
+```
